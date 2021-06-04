@@ -8,33 +8,35 @@ router.get('/', (req, res) => {
   res.send(`Hello from HOME router !!!`);
 });
 
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
   const { name, email, phone, work, password, cpassword } = req.body;
 
   if (!name || !email || !phone || !work || !password || !cpassword) {
     return res.status(422).json({ error: 'Fill all fields properly !' });
   }
 
-  User.findOne({ email: email })
-    .then((userExist) => {
-      if (userExist) {
-        return res.status(422).json({ error: 'Email already exist !' });
-      }
+  try {
+    const userExist = await User.findOne({ email: email });
 
-      const user = new User({ name, email, phone, work, password, cpassword });
+    if (userExist) {
+      return res.status(422).json({ error: 'Email already exist !' });
+    }
 
-      user
-        .save()
-        .then(() => {
-          res.status(201).json({ message: 'User registered successfully !' });
-        })
-        .catch((error) =>
-          res.status(501).json({ error: 'Failed to register !' })
-        );
-    })
-    .catch((error) => {
-      console.log(error);
+    const user = new User({
+      name,
+      email,
+      phone,
+      work,
+      password,
+      cpassword,
     });
+
+    await user.save();
+
+    res.status(201).json({ message: 'User registered successfully !' });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 module.exports = router;
