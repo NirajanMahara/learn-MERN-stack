@@ -38,6 +38,7 @@ app.get('/signup', (req, res) => {
 });
 
 app.get('/contact', (req, res) => {
+  res.cookie('TestCookieName', 'This is cookie content !');
   res.send(`Hello from CONTACT server !!!`);
 });
 
