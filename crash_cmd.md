@@ -76,6 +76,12 @@ Running on localhost:` http://localhost:5000/`
 
 
 
+`npm i dotenv`
+
+Creating .env file cmd
+
+`type null > config.env`
+
 
 
 

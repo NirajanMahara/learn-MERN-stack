@@ -1,22 +1,10 @@
+const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 
-const DB =
-  'mongodb+srv://nirajan:Nima1million$@cluster0.s3tl3.mongodb.net/mernstack?retryWrites=true&w=majority';
-
-// MongoDB Connection
-mongoose
-  .connect(DB, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-  })
-  .then(() => {
-    console.log(`MongoDB Connected !`);
-  })
-  .catch((error) => console.error(error));
+dotenv.config({ path: './config.env' });
+require('./db/conn');
 
 // Middleware
 const middleware = (req, res, next) => {
@@ -46,6 +34,6 @@ app.get('/contact', (req, res) => {
 });
 
 // Running Server PORT
-const port = process.env.PORT || 5000;
+const port = process.env.PORT;
 
 app.listen(port, () => console.log(`Server running on ${port} !`));
