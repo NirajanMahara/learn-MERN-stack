@@ -8,15 +8,21 @@ require('./db/conn');
 
 // const User = require('./model/userSchema');
 
+// json parser
+app.use(express.json());
+
+// link to router files to make route easy
+app.use(require('./router/auth'));
+
 // Middleware
 const middleware = (req, res, next) => {
   console.log(`Hello from Middleware !`);
   next();
 };
 
-app.get('/', (req, res) => {
-  res.send(`Hello from HOME server !!!`);
-});
+// app.get('/', (req, res) => {
+//   res.send(`Hello from HOME server !!!`);
+// });
 
 app.get('/about', middleware, (req, res) => {
   console.log(`HEllO ABOUT !`);
