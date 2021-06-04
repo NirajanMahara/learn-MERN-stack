@@ -1,5 +1,22 @@
+const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
+
+const DB =
+  'mongodb+srv://nirajan:Nima1million$@cluster0.s3tl3.mongodb.net/mernstack?retryWrites=true&w=majority';
+
+// MongoDB Connection
+mongoose
+  .connect(DB, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  })
+  .then(() => {
+    console.log(`MongoDB Connected !`);
+  })
+  .catch((error) => console.error(error));
 
 // Middleware
 const middleware = (req, res, next) => {
